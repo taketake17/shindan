@@ -1,0 +1,45 @@
+class QuestionsController < ApplicationController
+    def index
+        @questions = Question.all
+    end
+
+    def new
+        @question = Question.new
+    end
+
+    def show
+        @question = Question.find(params[:id])
+        @result = case (1..4).map { |i| @question.send("question#{i}") }.map(&:to_i).sum
+        when 12
+            "マジで言ってます？良い人狙いに行ってませんか？"
+        when 10..11
+            "あなたはとても良い人だ！素晴らしい！"
+        when 8..9
+            "あなたは良い人だ！自信持って！"
+        when 6..7
+            "あなたはまあまあ良い人だ！これくらいの方が人間味があって良いよね"
+        when 4..5
+            "もっと周りに優しくしてあげても良いかもね"
+        when 1..3
+            "ちょっと心配になるかも。。。。"
+        when 0
+            "まさに悪童だ！怖い！"
+        end
+    end
+
+    def create
+        @question = Question.new(question_params)
+        if @question.save
+            flash[:notice] = "診断が完了しました"
+            redirect_to question_path(@question)
+        else
+          redirect_to action: "new"
+        end
+    end
+
+    private
+
+    def question_params
+        params.require(:question).permit(:question1, :question2, :question3, :question4)
+    end
+end
