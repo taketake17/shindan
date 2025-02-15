@@ -1,5 +1,4 @@
 class QuestionsController < ApplicationController
-
     def index
         @questions = Question.all
     end
@@ -34,7 +33,7 @@ class QuestionsController < ApplicationController
             flash[:notice] = "診断が完了しました"
             redirect_to question_path(@question)
         else
-          redirect_to :action => "new"
+          redirect_to action: "new"
         end
     end
 
@@ -43,5 +42,4 @@ class QuestionsController < ApplicationController
     def question_params
         params.require(:question).permit(:question1, :question2, :question3, :question4)
     end
-
 end
