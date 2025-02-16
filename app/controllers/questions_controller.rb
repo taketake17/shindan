@@ -1,9 +1,10 @@
 class QuestionsController < ApplicationController
     def index
-        @questions = Question.all
+        @questions = YAML.load_file(Rails.root.join('app', 'data', 'questions.yml'))['questions']
     end
 
     def new
+        @questions = YAML.load_file(Rails.root.join('app', 'data', 'questions.yml'))['questions']
         @question = Question.new
     end
 
