@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/rails/tailwindcss-rails.git
-  revision: 465e118ed15ae87b45030eb20a59ace245cf4bf1
+  revision: e68571872f758273edfc8f4c83925b07a5d29909
   branch: main
   specs:
     tailwindcss-rails (4.0.0)
@@ -334,7 +334,7 @@ DEPENDENCIES
   selenium-webdriver
   sprockets-rails
   stimulus-rails
-  tailwindcss-rails (~> 4.0.0.rc1)!
+  tailwindcss-rails (~> 4.0.0)!
   turbo-rails
   tzinfo-data
   web-console
