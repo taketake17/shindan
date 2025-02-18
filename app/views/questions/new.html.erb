@@ -1,18 +1,20 @@
-<%= form_with model: @question, class: 'form-horizontal', local: true, method: :post do |f| %>
-    <div class="question-container">
-        <% @questions.each_with_index do |question, index| %>
-            <div class="col-12">
-                <p><%= question['text'] %></p>
-            </div>
-            <div class="col-6">
-                <% question['options'].each do |option| %>
-                    <p><%= f.radio_button "question#{question['id']}", option['value'], id: "custom_id#{option['value']}" %>
-                    <label for="custom_id<%= option['value'] %>"><%= option['label'] %></label></p>
-                <% end %>
-            </div>
+<%= form_with url: questions_path, local: true, method: :post do |f| %>
+  <div class="question-container">
+    <% @questions.each do |question| %>
+      <div class="col-12">
+        <p><%= question['text'] %></p>
+      </div>
+      <div class="col-6">
+        <% question['options'].each do |option| %>
+          <p>
+            <%= f.radio_button "answers[#{question['id']}]", option['value'], id: "question_#{question['id']}_option_#{option['value']}" %>
+            <label for="question_<%= question['id'] %>_option_<%= option['value'] %>"><%= option['label'] %></label>
+          </p>
         <% end %>
-    </div>
-    <div class="sindanbotan">
-        <%= f.submit " 結果 " %>
-    </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="sindanbotan">
+    <%= f.submit "結果" %>
+  </div>
 <% end %>
