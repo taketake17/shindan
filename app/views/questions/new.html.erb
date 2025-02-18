@@ -1,52 +1,32 @@
-<%= form_with model: @question, class: 'form-horizontal', local: true, method: :post do |f| %>
-    <div class="question-container">
-        <div class="col-12">
-            <p>Q1. 大きな荷物を持って横断歩道を渡ろうとしているおばあさんがいました。あなたならどうしますか？</p>
+<%= form_with url: questions_path, local: true, method: :post, class: "max-w-4xl mx-auto px-4 py-8" do |f| %>
+  <div class="space-y-12">
+    <% @questions.each_with_index do |question, index| %>
+      <div class="bg-gradient-to-r from-purple-100 to-pink-100 shadow-lg rounded-xl p-8 transform hover:scale-105 transition duration-300">
+        <h3 class="text-2xl font-bold mb-6 text-indigo-800">
+          <%= question['text'] %>
+        </h3>
+        <div class="space-y-6">
+          <% question['options'].each do |option| %>
+            <div class="flex items-center bg-white rounded-lg p-4 hover:bg-indigo-50 transition duration-200">
+              <%= f.radio_button "answers[#{question['id']}]", 
+                                 option['value'], 
+                                 id: "question_#{question['id']}_option_#{option['value']}",
+                                 checked: @answers&.find { |a| a.question_id.to_s == question['id'].to_s }&.selected_value.to_s == option['value'].to_s,
+                                 class: "mr-4 h-6 w-6 text-indigo-600 focus:ring-indigo-500" %>
+              <label for="question_<%= question['id'] %>_option_<%= option['value'] %>" class="text-xl text-gray-700 cursor-pointer flex-grow">
+                <%= option['label'] %>
+              </label>
+            </div>
+          <% end %>
         </div>
-        <div class="col-6">
-            <p><%= f.radio_button :question1, 3, id: "custom_id1" %>
-            <label for="custom_id1">大きな荷物を運びながら横断歩道を渡るのは危ないので荷物を持ってあげる</label></p>
-            <p><%= f.radio_button :question1,2, id: "custom_id2" %>
-            <label for="custom_id2">横断歩道の前まで荷物を持って来れたのだからそれなりに力もありそうだし大丈夫だろうということで何もしない</label></p>
-            <p><%= f.radio_button :question1, 0, id: "custom_id3" %>
-            <label for="custom_id3">「ちんたら歩いてんじゃねぇ」と暴言を吐き、蹴飛ばす</label></p>
-        </div>
-        <div class="col-12">
-            <p>Q2.友達が「ほんと痩せたいからダイエットするわ〜」と言いながら唐揚げを頬張っていました。あなたならどうしますか？</p>
-        </div> 
-        <div class="col-6">
-            <p><%= f.radio_button :question2, 3, id: "custom_id4" %>
-            <label for="custom_id4">唐揚げを食べてたらダイエットなんかできないよと言って心を鬼にして友達の唐揚げを食べてあげる</label></p>
-            <p><%= f.radio_button :question2, 1, id: "custom_id5" %>    
-            <label for="custom_id5">「そうなんだ。頑張れ」と応援だけしてあげる</label></p>
-            <p><%= f.radio_button :question2, 0, id: "custom_id6" %>
-            <label for="custom_id6">唐揚げは油で揚げているから0カロリーだしどんどん食べなと言い、ダイエットの邪魔をする</label></p>
-        </div>   
-        <div class="col-12">
-            <p>Q3. 外国人が道に迷って困っている様子です。あなたは全く英語を話せません。あなたならどうしますか？</p>
-        </div>
-        <div class="col-6">
-            <p><%= f.radio_button :question3, 3, id: "custom_id7" %>
-            <label for="custom_id7">スマホの翻訳機能を使って身振り手振りで助けてあげる</label></p>
-            <p><%= f.radio_button :question3, 1, id: "custom_id8" %>
-            <label for="custom_id8">全く英語ができない自分がしゃしゃり出ても逆に迷惑をかけるだけなので何もしない</label></p>
-            <p><%= f.radio_button :question3, 0, id: "custom_id9" %>
-            <label for="custom_id9">日本語で捲し立てて外国人に日本の厳しさを教えてあげる</label></p>
-        </div>
-    
-        <div class="col-12">
-            <p>Q4.あなたはやっとの思いでドラゴンボールを7つ集めることができました。どのようなお願いをしますか？</p>
-        </div>
-        <div class="col-6">
-            <p><%= f.radio_button :question4, 3, id: "custom_id10" %>
-            <label for="custom_id10">世界中の人たちが平和に楽しく暮らせるようにしてほしいと願う</label></p>
-            <p><%= f.radio_button :question4, 1, id: "custom_id11" %>  
-            <label for="custom_id11">不老不死と永遠の若さをお願いする</label></p>
-            <p><%= f.radio_button :question4, 0, id: "custom_id12" %>
-            <label for="custom_id12">自分が世界征服をして好き勝手暴れ回りたいと願う</label></p>
-        </div>
-    </div>
-    <div class="sindanbotan">
-        <%= f.submit " 結果 " %>
-    </div>
+      </div>
+    <% end %>
+  </div>
+  <div class="mt-12 text-center">
+    <%= f.submit "結果を見る！", class: "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 ease-in-out" %>
+  </div>
 <% end %>
+
+
+
+

@@ -1,2 +1,36 @@
-<h1>香水診断スタート</h1>
-<%= link_to "診断を始める", new_question_path, class: "link" %>
+<div class="container mx-auto px-4 py-8 max-w-3xl">
+  <div class="text-center mb-12">
+    <h1 class="text-4xl md:text-5xl font-bold mb-4 text-indigo-600 animate-pulse">
+      🕵️‍♂️ 良い人チェッカー 🕵️‍♀️
+    </h1>
+    <p class="text-xl md:text-xl text-gray-700 mb-8">
+      驚愕の真実が明らかに！ 製作者の鋭い洞察力で暴く、あなたの隠れた本質
+    </p>
+  </div>
+
+  <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-8" role="alert">
+    <p class="font-bold">⚠️ 注意 ⚠️</p>
+    <p>このサービスには辛辣な表現や皮肉が含まれます。<br>
+    心の準備のない方は、そっと戻るボタンを押してください。</p>
+  </div>
+
+  <%= link_to new_question_path, class: "block w-full md:w-2/3 mx-auto bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg text-center transition duration-300 ease-in-out transform hover:-translate-y-1 hover:scale-105" do %>
+    <span class="mr-2">覚悟を決めて診断開始</span>
+    <span class="text-2xl">🚀</span>
+  <% end %>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
+      <span class="text-4xl mb-4 block">🎭</span>
+      <p class="text-gray-700">あなたの隠れた一面を暴きます</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
+      <span class="text-4xl mb-4 block">🤔</span>
+      <p class="text-gray-700">思わず「なるほど」と唸る診断結果</p>
+    </div>
+    <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300">
+      <span class="text-4xl mb-4 block">😂</span>
+      <p class="text-gray-700">笑いあり、驚きあり、涙あり？</p>
+    </div>
+  </div>
+</div>
