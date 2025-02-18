@@ -6,20 +6,26 @@ class QuestionsController < ApplicationController
 
     def new
         @questions = YAML.load_file(Rails.root.join('app', 'data', 'questions.yml'))['questions']
-        @answer = Answer.new
-      end
+    end
       
 
     def create
-        answers = params[:answers]
-        @total_score = calculate_result(answers)
-        @evaluation = evaluate_result(@total_score)
-        
-        answers.each do |question_id, selected_value|
-            Answer.find_or_create_by(question_id: question_id).update(selected_value: selected_value.to_i)
+        @questions = YAML.load_file(Rails.root.join('app', 'data', 'questions.yml'))['questions']
+        answers = params[:answers].present? ? params[:answers].to_unsafe_h : {}
+        @answers = @questions.map do |question|
+            Answer.new(question_id: question['id'], selected_value: answers[question['id'].to_s]
+            )
         end
-      
-        redirect_to question_result_path(total_score: @total_score, evaluation: @evaluation)
+
+        if @answers.all?(&:valid?)
+            @total_score = calculate_result(answers)
+            @evaluation = evaluate_result(@total_score)
+            @answers.each(&:save)
+            redirect_to question_result_path(total_score: @total_score, evaluation: @evaluation)
+          else
+            flash.now[:error] = "全ての項目を入力してください"
+            render :new, status: :unprocessable_entity
+        end
     end
       
       
@@ -42,19 +48,21 @@ class QuestionsController < ApplicationController
       
     def evaluate_result(result)
         case result 
-        when 12
+        when 100..130
+            "あなたは本当に良い人かもしれませんが、謙虚さが足りないようです。本当に良い人は自分から良い人って言わないっておばあちゃんが言ってました。"
+        when 30
           "マジで言ってます？良い人狙いに行ってませんか？"
-        when 10..11
-          "とても良い人だ！素晴らしい！"
-        when 8..9
-          "良い人だ！自信持って！"    
-        when 6..7
-          "まあまあ良い人だ！これくらいの方が人間味があって良いよね"
-        when 4..5
+        when 25..29
+          "あなたはとても良い人だ！素晴らしいきっと良いことがありますよ！"
+        when 18..24
+          "あなたは良い人だ！自信持って！"    
+        when 13..17
+          "あなたはまあまあ良い人だ！これくらいの方が人間味があって良いよね"
+        when 7..12
           "もっと周りに優しくしてあげても良いかもね"
-        when 1..3
+        when 2..6
           "ちょっと心配になるかも。。。。"    
-        when 0
+        when 1
           "まさに悪童だ！逃げろ！"
         end
     end
