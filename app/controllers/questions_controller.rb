@@ -6,8 +6,9 @@ class QuestionsController < ApplicationController
 
     def new
         @questions = YAML.load_file(Rails.root.join('app', 'data', 'questions.yml'))['questions']
-        
-    end
+        @answer = Answer.new
+      end
+      
 
     def create
         answers = params[:answers]
