@@ -20,7 +20,7 @@ gem "cssbundling-rails"
 gem "jbuilder"
 # Use Redis adapter to run Action Cable in production
 # gem "redis", ">= 4.0.1"
-gem "tailwindcss-rails", "~> 4.0.0", github: "rails/tailwindcss-rails", branch: "main"
+gem "tailwindcss-rails", "~> 4.1.0", github: "rails/tailwindcss-rails", branch: "main"
 
 gem "kaminari"
 
