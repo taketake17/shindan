@@ -1,6 +1,6 @@
-<%= form_with url: questions_path, local: true, method: :post, class: "max-w-4xl mx-auto px-4 py-8" do |f| %>
+<%= form_with url: questions_path, method: :post, local: true, class: "max-w-4xl mx-auto px-4 py-8" do |f| %>
   <div class="space-y-12">
-    <% @questions.each_with_index do |question, index| %>
+    <% @questions.each do |question| %>
       <div class="bg-gradient-to-r from-purple-100 to-pink-100 shadow-lg rounded-xl p-8 transform hover:scale-105 transition duration-300">
         <h3 class="text-2xl font-bold mb-6 text-indigo-800">
           <%= question['text'] %>
@@ -11,7 +11,7 @@
               <%= f.radio_button "answers[#{question['id']}]", 
                                  option['value'], 
                                  id: "question_#{question['id']}_option_#{option['value']}",
-                                 checked: @answers&.find { |a| a.question_id.to_s == question['id'].to_s }&.selected_value.to_s == option['value'].to_s,
+                                 checked: @answers[question['id'].to_s] == option['value'].to_s,
                                  class: "mr-4 h-6 w-6 text-indigo-600 focus:ring-indigo-500" %>
               <label for="question_<%= question['id'] %>_option_<%= option['value'] %>" class="text-xl text-gray-700 cursor-pointer flex-grow">
                 <%= option['label'] %>
@@ -22,11 +22,18 @@
       </div>
     <% end %>
   </div>
-  <div class="mt-12 text-center">
-    <%= f.submit "結果を見る！", class: "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 ease-in-out" %>
+
+  <%= hidden_field_tag :page, params[:page] %>
+
+  <div class="mt-12 flex justify-between items-center">
+    <% if @questions.current_page > 1 %>
+      <%= f.submit "前のページ", name: 'commit', value: '前のページ', class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-l mx-auto" %>
+    <% end %>
+
+    <% if @questions.current_page < @questions.total_pages %>
+      <%= f.submit "次のページへ", name: 'commit', value: '次のページへ', class: "bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-r mx-auto" %>
+    <% else %>
+      <%= f.submit "結果を見る！", name: 'commit', value: '結果を見る！', class: "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white font-bold py-4 px-8 rounded-full text-xl shadow-lg transform hover:scale-105 transition duration-300 ease-in-out mx-auto" %>
+    <% end %>
   </div>
 <% end %>
-
-
-
-

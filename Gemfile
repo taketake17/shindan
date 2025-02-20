@@ -22,6 +22,8 @@ gem "jbuilder"
 # gem "redis", ">= 4.0.1"
 gem "tailwindcss-rails", "~> 4.0.0", github: "rails/tailwindcss-rails", branch: "main"
 
+gem "kaminari"
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
