@@ -13,7 +13,7 @@ class QuestionsController < ApplicationController
     def create
       load_questions
       update_session_answers
-      @answers = params[:answers].present? ? params[:answers].to_unsafe_h : {}
+      @answers = params[:answers].present? ? params[:answers]: {}
 
       case params[:commit]
       when "結果を見る！"
