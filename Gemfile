@@ -24,6 +24,14 @@ gem "tailwindcss-rails", "~> 4.0.0", github: "rails/tailwindcss-rails", branch: 
 
 gem "kaminari"
 
+gem "pry-rails"
+
+gem "better_errors"
+
+gem "binding_of_caller"
+
+gem "devise"
+
 # Use Kredis to get higher-level data types in Redis [https://github.com/rails/kredis]
 # gem "kredis"
 
