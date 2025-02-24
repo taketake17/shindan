@@ -34,14 +34,15 @@ class QuestionsController < ApplicationController
     @answers = TemporaryAnswer.where(session_id: session.id.to_s).pluck(:question_id, :selected_value).to_h
     session[:answers] ||= {}
     session[:answers].merge!(@answers)
-
+  
     if params[:answers].present?
-      permitted_answers = params.require(:answers).permit!.to_h
+      permitted_answers = params.require(:answers).permit(Question.pluck(:id).map { |id| [id.to_s, :selected_value] }.to_h).to_h
       session[:answers].merge!(permitted_answers)
     end
-
+  
     @answers = session[:answers]
   end
+  
 
 
   def update_temporary_answers
