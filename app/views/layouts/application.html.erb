@@ -19,12 +19,22 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 
     <%= render 'layouts/flash_messages' %>
-    
   </head>
 
   <body>
-     <main class="container mx-auto mt-28 px-5 flex">
-        <%= yield %>
-     </main>
+    <header class="flex justify-end items-center p-4 bg-gray-100">
+       <%= link_to "トップページ", questions_path, class: "text-gray-600 hover:text-blue-600 font-medium py-1 px-4 rounded transition duration-300 ease-in-out" %>
+      <% if user_signed_in? %>
+        <%= link_to "マイページ", edit_user_registration_path, class: "text-gray-600 hover:text-blue-600 font-medium py-2 px-4 rounded transition duration-300 ease-in-out" %>
+        <%= button_to "ログアウト", destroy_user_session_path, method: :delete, class: "text-gray-600 hover:text-red-600 font-medium py-2 px-4 rounded transition duration-300 ease-in-out mr-2" %>
+      <% else %>
+        <%= link_to "ログイン/新規登録", new_user_session_path, class: "text-gray-600 hover:text-green-600 font-medium py-2 px-4 rounded transition duration-300 ease-in-out" %>
+      <% end %>
+   </header>
+
+
+    <main class="container mx-auto mt-28 px-5 flex">
+      <%= yield %>
+    </main>
   </body>
 </html>
